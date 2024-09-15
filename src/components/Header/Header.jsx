@@ -1,5 +1,5 @@
 import { MoonOutlined, ShoppingCartOutlined, SunOutlined } from "@ant-design/icons";
-import { Badge, Input, Switch } from "antd";
+import { Badge, Input, Modal, Switch } from "antd";
 
 import "./header.css";
 import { useContext, useState } from "react";
@@ -9,6 +9,8 @@ import initialProducts from "../../data/products";
 function Header() {
   const themeContext = useContext(ThemeContext);
   const productContext = useContext(ProductContext);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function onChange(checked) {
     if (checked) {
@@ -38,6 +40,11 @@ function Header() {
 
   const numberOfProductsInCart = productContext.productsInCart.reduce(
     (accumulator, currentItem) => accumulator + currentItem.quantity,
+    0
+  );
+
+  const totalPrice = productContext.productsInCart.reduce(
+    (acc, currentProd) => acc + currentProd.quantity * currentProd.price,
     0
   );
 
@@ -76,12 +83,27 @@ function Header() {
 
         <Badge count={numberOfProductsInCart}>
           <ShoppingCartOutlined
+            onClick={() => setIsModalOpen(true)}
             style={{
               fontSize: 30,
               color: themeContext.theme === "dark" ? "white" : "black",
             }}
           />
         </Badge>
+
+        <Modal title="Basic Modal" open={isModalOpen} onOk={() => {}} onCancel={() => setIsModalOpen(false)}>
+          {productContext.productsInCart.map((prod) => {
+            return (
+              <li key={prod.id}>
+                {prod.name} x {prod.quantity} {"-----"}
+                {prod.quantity * prod.price}L
+              </li>
+            );
+          })}
+          <br />
+          <hr />
+          Total: {totalPrice}L
+        </Modal>
       </div>
     </header>
   );

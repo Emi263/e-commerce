@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import About from "./pages/About";
 import Checkout from "./pages/Checkout";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import initialProducts from "./data/products";
 
 export const ProductContext = createContext();
@@ -18,7 +18,11 @@ function App() {
   const [products, setProducts] = useState(initialProducts);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const [productsInCart, setProductsInCart] = useState([]);
+  const defaultProductsInCart = localStorage.getItem("productsInCart")
+    ? JSON.parse(localStorage.getItem("productsInCart"))
+    : [];
+
+  const [productsInCart, setProductsInCart] = useState(defaultProductsInCart);
 
   const router = createBrowserRouter([
     {
@@ -34,6 +38,10 @@ function App() {
       element: <Checkout />,
     },
   ]);
+
+  useEffect(() => {
+    localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
+  }, [productsInCart]);
 
   return (
     <>

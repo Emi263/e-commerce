@@ -12,7 +12,7 @@ function ProductList() {
     <section
       className="productList"
       style={{
-        background: themeContext.theme === "dark" ? "black" : "white",
+        background: themeContext?.theme === "dark" ? "black" : "white",
       }}
     >
       {productContext.products.map((item) => {
