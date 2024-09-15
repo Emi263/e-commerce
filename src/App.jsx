@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import About from "./pages/About";
 import Checkout from "./pages/Checkout";
 import { createContext, useState } from "react";
+import initialProducts from "./data/products";
 
 export const ProductContext = createContext();
 export const ThemeContext = createContext();
@@ -13,6 +14,11 @@ function App() {
   // const isDarkMode = getCurrentTheme();
   const defaultTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark";
   const [theme, setTheme] = useState(defaultTheme);
+
+  const [products, setProducts] = useState(initialProducts);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const [productsInCart, setProductsInCart] = useState([]);
 
   const router = createBrowserRouter([
     {
@@ -32,7 +38,16 @@ function App() {
   return (
     <>
       <ThemeContext.Provider value={{ theme, setTheme }}>
-        <ProductContext.Provider value={null}>
+        <ProductContext.Provider
+          value={{
+            products,
+            setProducts,
+            selectedCategory,
+            setSelectedCategory,
+            productsInCart,
+            setProductsInCart,
+          }}
+        >
           <RouterProvider router={router} />
         </ProductContext.Provider>
       </ThemeContext.Provider>

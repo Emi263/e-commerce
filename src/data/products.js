@@ -6,6 +6,7 @@ const products = [
       name: "Family Bundle",
       description: "2 chicken Gyros, 2 fries, 2 coca cola",
       price: 900,
+
       imageUrl:
         "https://images.weserv.nl/?url=lh3.googleusercontent.com/0kTcEH3IPDOqnsvGBar2Si4NMY9Jj_lnWOW-k281TeyjoIso1OMXv2NWMwQWLO_u0qcb-8ovzV3G3xVPZ-0JfrJTr15DeN51hZA",
     },
